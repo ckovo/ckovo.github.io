@@ -10,13 +10,64 @@ class NameDisplay {
         this.container = document.querySelector('.container');
         // 要展示的名字数组
         this.names = [
-            "寻龙", "Blast", "南烟吹北枳", "Fvhitmitil", "TITANXPASCAL",
-            "枕书", "幻想狂奏曲", "迷之小肥羊", "special", "裝逼造脸一顿踢",
-            "岛田镖师", "淡风盈晓", "SHE", "想念还在等待救援", "只想做个洒脱的人",
-            "腹黑猫", "从未手软", "梦里是艾什", "逗斯咏", "寡言",
-            "易忘", "济南屁屁王", "吾", "这是我家的圆圆呀", "宁就是地上这滩水",
-            "没有梦想不想说话", "家里有妖怪", "神明也曾遗憾", "AE86"
+            "寻龙",
+            "Blast", 
+            "南烟吹北枳", 
+            "Fvhitmitil", 
+            "TITANXPASCAL",
+            "枕书", 
+            "幻想狂奏曲", 
+            "迷之小肥羊", 
+            "special", 
+            "裝逼造脸一顿踢",
+            "岛田镖师", 
+            "淡风盈晓", 
+            "SHE", 
+            "想念还在等待救援", 
+            "只想做个洒脱的人",
+            "腹黑猫", 
+            "从未手软", 
+            "梦里是艾什", 
+            "逗斯咏", "寡言",
+            "易忘", "济南屁屁王", 
+            "吾", 
+            "这是我家的圆圆呀", 
+            "宁就是地上这滩水",
+            "没有梦想不想说话", 
+            "家里有妖怪", 
+            "神明也曾遗憾", 
+            "AE86"
         ];
+        this.description = ["来自发霉的披萨，永远的闷骚型男",
+            "Blast的简介",
+            "南烟吹北枳的简介",
+            "Fvhitmitil的简介",
+            "TITANXPASCAL的简介",
+            "枕书的简介",
+            "幻想狂奏曲的简介",
+            "迷之小肥羊的简介",
+            "special的简介",
+            "裝逼造脸一顿踢的简介",
+            "岛田镖师的简介",
+            "淡风盈晓的简介",
+            "SHE的简介",
+            "想念还在等待救援的简介",
+            "只想做个洒脱的人的简介",
+            "腹黑猫的简介",
+            "从未手软的简介",
+            "梦里是艾什的简介",
+            "逗斯咏的简介",
+            "寡言的简介",
+            "易忘的简介",
+            "济南屁屁王的简介",
+            "吾的简介",
+            "这是我家的圆圆呀的简介",
+            "宁就是地上这滩水的简介",
+            "没有梦想不想说话的简介",
+            "家里有妖怪的简介",
+            "神明也曾遗憾的简介",
+            "AE86的简介"];
+            
         // 当前展示到的索引位置
         this.currentIndex = 0;
         // 每组显示的名字数量
@@ -146,7 +197,9 @@ class NameDisplay {
         // Fisher-Yates 洗牌算法
         for (let i = this.names.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
+            // 同时交换 names 和 description 数组的元素
             [this.names[i], this.names[j]] = [this.names[j], this.names[i]];
+            [this.description[i], this.description[j]] = [this.description[j], this.description[i]];
         }
     }
 
@@ -237,6 +290,45 @@ class NameDisplay {
         // 监听动画结束事件
         nameElement.addEventListener('animationend', () => {
             nameElement.remove();
+        });
+
+        // 修改鼠标悬停事件处理
+        nameElement.addEventListener('mouseenter', (e) => {
+            // 创建描述框
+            const descriptionBox = document.createElement('div');
+            descriptionBox.className = 'description-box';
+            // 使用相同的索引获取对应的描述文本
+            descriptionBox.textContent = this.description[index];
+            document.body.appendChild(descriptionBox);
+
+            // 计算描述框位置
+            const rect = nameElement.getBoundingClientRect();
+            const boxLeft = rect.right + 10;
+            const boxTop = rect.top;
+
+            // 检查是否超出右边界
+            if (boxLeft + descriptionBox.offsetWidth > window.innerWidth) {
+                descriptionBox.style.left = (rect.left - descriptionBox.offsetWidth - 10) + 'px';
+            } else {
+                descriptionBox.style.left = boxLeft + 'px';
+            }
+            descriptionBox.style.top = boxTop + 'px';
+
+            // 显示描述框
+            requestAnimationFrame(() => {
+                descriptionBox.classList.add('show');
+            });
+
+            // 存储描述框引用
+            nameElement.descriptionBox = descriptionBox;
+        });
+
+        nameElement.addEventListener('mouseleave', () => {
+            // 移除描述框
+            if (nameElement.descriptionBox) {
+                nameElement.descriptionBox.remove();
+                nameElement.descriptionBox = null;
+            }
         });
 
         return nameElement;
