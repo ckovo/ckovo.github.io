@@ -645,6 +645,9 @@ class NameDisplay {
             [columns[i], columns[j]] = [columns[j], columns[i]];
         }
 
+        // 修改显示间隔时间
+        const intervalTime = 800; // 增加间隔时间，从500改为800
+
         // 显示名字
         columns.forEach((column, index) => {
             setTimeout(() => {
@@ -655,12 +658,15 @@ class NameDisplay {
                 requestAnimationFrame(() => {
                     nameElement.classList.add('moving');
                 });
-            }, index * 500);
+            }, index * intervalTime); // 使用新的间隔时间
         });
 
         this.currentIndex += this.displayCount;
-        // 存储计时器引用
-        this.animationTimer = setTimeout(() => this.showNextGroup(), this.displayCount * 500 + 500);
+        // 修改下一组显示的延迟时间
+        this.animationTimer = setTimeout(
+            () => this.showNextGroup(), 
+            this.displayCount * intervalTime + 1000 // 增加额外延迟
+        );
     }
 }
 

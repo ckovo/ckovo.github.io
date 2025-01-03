@@ -1,88 +1,106 @@
+/* 基础页面样式 */
 body {
     margin: 0;
     padding: 0;
     background: #1a1a1a;
     min-height: 100vh;
-    overflow: hidden;
+    overflow: hidden;  /* 防止页面滚动 */
 }
 
-/* 添加背景图片容器 */
+/* 背景图片容器样式 */
 .bg-container {
-    position: fixed;
+    position: fixed;  /* 固定定位，覆盖整个视口 */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 1s ease;
+    z-index: -1;  /* 置于最底层 */
+    opacity: 0;  /* 初始透明 */
+    transition: opacity 1s ease;  /* 淡入效果 */
 }
 
+/* 背景图片样式 */
 .bg-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    filter: brightness(0.7); /* 稍微调暗图片，使名字更清晰 */
+    object-fit: cover;  /* 保持图片比例填充 */
+    filter: brightness(0.7);  /* 调暗图片以突出名字 */
 }
 
-/* 当图片加载完成后显示 */
+/* 背景图片显示状态 */
 .bg-container.show {
     opacity: 1;
 }
 
+/* 主容器样式 */
 .container {
     width: 100%;
     height: 100vh;
     position: relative;
-    overflow: hidden;
+    overflow: hidden;  /* 隐藏超出部分 */
 }
 
+/* 名字框样式 */
 .name-box {
     position: absolute;
     padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.92);  /* 半透明背景 */
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);  /* 阴影效果 */
     text-align: center;
     font-size: 24px;
     font-weight: bold;
     color: #2c3e50;
-    opacity: 0;
-    backdrop-filter: blur(8px);
+    opacity: 0;  /* 初始透明 */
+    backdrop-filter: blur(8px);  /* 背景模糊效果 */
     border: 2px solid rgba(255, 255, 255, 0.3);
-    transform-style: preserve-3d;
+    transform-style: preserve-3d;  /* 3D 变换效果 */
     perspective: 1000px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);  /* 平滑过渡 */
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;  /* 文字溢出显示省略号 */
     letter-spacing: 1px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);  /* 文字阴影 */
+    will-change: transform, opacity;  /* 优化动画性能 */
 }
 
+/* 名字上移动画关键帧 */
 @keyframes moveUp {
-    0% {
-        transform: translateY(100vh);
+    0% {  /* 初始状态 */
+        transform: translateY(100vh) translateZ(0) scale(0.8);
         opacity: 0;
     }
-    10% {
+    5% {  /* 出现状态 */
+        transform: translateY(90vh) translateZ(0) scale(1);
         opacity: 1;
     }
-    90% {
+    75% {  /* 开始加速 */
+        transform: translateY(20vh) translateZ(0) scale(1);
         opacity: 1;
     }
-    100% {
-        transform: translateY(-100vh);
+    80% {  /* 快速上升 */
+        transform: translateY(10vh) translateZ(0) scale(0.9);
+        opacity: 0.8;
+    }
+    85% {  /* 加速消失 */
+        transform: translateY(-15vh) translateZ(0) scale(0.8);
+        opacity: 0.3;
+    }
+    100% {  /* 完全消失 */
+        transform: translateY(-25vh) translateZ(0) scale(0.6);
         opacity: 0;
     }
 }
 
+/* 名字移动动画应用 */
 .name-box.moving {
-    animation: moveUp 15s linear forwards;
+    animation: moveUp 14s cubic-bezier(0.4, 0, 1, 1) forwards;
     opacity: 1;
 }
 
+/* 名字框渐变背景 */
 .name-box::before {
     content: '';
     position: absolute;
@@ -99,26 +117,28 @@ body {
     z-index: -1;
 }
 
+/* 移动动画类 */
 .moving {
     animation: moveUp 8s linear forwards;
 }
 
+/* 暂停动画状态 */
 .paused {
     animation-play-state: paused;
 }
 
-/* 樱花容器 */
+/* 樱花效果容器 */
 .sakura-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    pointer-events: none;  /* 允许点击穿透 */
     z-index: 10;
 }
 
-/* 樱花花瓣 */
+/* 樱花花瓣样式 */
 .sakura-petal {
     position: absolute;
     top: -50px;
@@ -130,6 +150,7 @@ body {
     filter: blur(0.5px);
 }
 
+/* 樱花花瓣内部装饰 */
 .sakura-petal:before {
     content: '';
     display: block;
@@ -142,6 +163,7 @@ body {
     opacity: 0.7;
 }
 
+/* 樱花飘落动画 */
 @keyframes sakuraFall {
     0% {
         transform: 
@@ -192,16 +214,16 @@ body {
     }
 }
 
-/* 添加暂停状态样式 */
+/* 名字框悬停状态 */
 .name-box.paused {
     animation-play-state: paused !important;
-    transform: scale(1.1) translateZ(20px);
+    transform: scale(1.1) translateZ(20px);  /* 放大效果 */
     box-shadow: 0 15px 45px rgba(31, 38, 135, 0.25);
     background: rgba(255, 255, 255, 0.95);
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* 添加描述框样式 */
+/* 描述框样式 */
 .description-box {
     position: absolute;
     background: rgba(0, 0, 0, 0.85);
@@ -211,7 +233,7 @@ body {
     font-size: 16px;
     max-width: 250px;
     z-index: 1001;
-    pointer-events: none;
+    pointer-events: none;  /* 允许点击穿透 */
     opacity: 0;
     transition: all 0.3s ease;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
@@ -224,12 +246,13 @@ body {
     font-weight: 300;
 }
 
+/* 描述框显示状态 */
 .description-box.show {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* 添加描述框的小箭头 */
+/* 描述框箭头 */
 .description-box::before {
     content: '';
     position: absolute;
@@ -244,7 +267,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 当描述框在左侧显示时，箭头在右边 */
+/* 描述框在左侧显示时的箭头样式 */
 .description-box[style*="left: 0"] ::before {
     left: auto;
     right: -5px;
