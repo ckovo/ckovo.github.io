@@ -42,6 +42,64 @@ class NameDisplay {
             this.columnOffsets[i] = 0;
             this.lastNameInColumn[i] = -200; // 初始偏移
         }
+
+        let nameElements = [];  // 存储所有名字元素的数组
+
+        // 页面可见性改变时的处理函数
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // 页面隐藏时，清除所有现有的名字元素
+                nameElements.forEach(element => {
+                    if (element && element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                });
+                nameElements = [];  // 重置数组
+            }
+        });
+
+        function createNameElement() {
+            // 创建新的名字元素
+            const nameElement = document.createElement('div');
+            nameElement.className = 'name-box';
+            nameElement.textContent = getRandomName();  // 假设这个函数已经存在
+            
+            // 设置初始位置
+            nameElement.style.bottom = '0';
+            nameElement.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            
+            document.body.appendChild(nameElement);
+            nameElements.push(nameElement);  // 将新元素添加到数组中
+            
+            // 动画完成后移除元素
+            nameElement.addEventListener('animationend', () => {
+                if (nameElement.parentNode) {
+                    nameElement.parentNode.removeChild(nameElement);
+                    nameElements = nameElements.filter(el => el !== nameElement);
+                }
+            });
+        }
+
+        // 添加页面可见性变化监听
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // 页面隐藏时清除所有名字元素
+                const nameBoxes = document.querySelectorAll('.name-box');
+                nameBoxes.forEach(box => {
+                    if (box && box.parentNode) {
+                        box.parentNode.removeChild(box);
+                    }
+                });
+                
+                // 重置计数器和偏移量
+                this.currentIndex = 0;
+                this.columnOffsets.fill(0);
+                this.lastNameInColumn.fill(-200);
+                
+                // 重新打乱名字顺序
+                this.shuffleNames();
+            }
+        });
     }
 
     /**

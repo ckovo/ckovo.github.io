@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>名称展示动画</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 修改 iframe 的样式 */
+        iframe {
+            position: fixed;  /* 固定定位 */
+            bottom: 20px;    /* 距离底部 20px */
+            right: 20px;     /* 距离右侧 20px */
+            border: none;    /* 移除边框 */
+            z-index: 1000;   /* 确保 iframe 在其他元素上方 */
+        }
+    </style>
 </head>
 <body>
     <div class="container">

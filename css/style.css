@@ -59,6 +59,23 @@ body {
     text-overflow: ellipsis;
 }
 
+@keyframes moveUp {
+    0% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
 .name-box.moving {
     animation: moveUp 15s linear forwards;
     opacity: 1;
@@ -86,23 +103,6 @@ body {
 
 .paused {
     animation-play-state: paused;
-}
-
-@keyframes moveUp {
-    0% {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-100vh);
-        opacity: 0;
-    }
 }
 
 /* 樱花容器 */
