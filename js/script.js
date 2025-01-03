@@ -8,66 +8,40 @@ class NameDisplay {
     constructor() {
         // 获取容器元素
         this.container = document.querySelector('.container');
-        // 要展示的名字数组
-        this.names = [
-            "寻龙",
-            "Blast", 
-            "南烟吹北枳", 
-            "Fvhitmitil", 
-            "TITANXPASCAL",
-            "枕书", 
-            "幻想狂奏曲", 
-            "迷之小肥羊", 
-            "special", 
-            "裝逼造脸一顿踢",
-            "岛田镖师", 
-            "淡风盈晓", 
-            "SHE", 
-            "想念还在等待救援", 
-            "只想做个洒脱的人",
-            "腹黑猫", 
-            "从未手软", 
-            "梦里是艾什", 
-            "逗斯咏", "寡言",
-            "易忘", "济南屁屁王", 
-            "吾", 
-            "这是我家的圆圆呀", 
-            "宁就是地上这滩水",
-            "没有梦想不想说话", 
-            "家里有妖怪", 
-            "神明也曾遗憾", 
-            "AE86"
+        
+        // 使用二维数组存储人物信息 [名字, 描述]
+        this.persons = [
+            ["寻龙", "来自发霉的披萨，永远的闷骚型男"],
+            ["Blast", "Blast的简介"],
+            ["南烟吹北枳", "南烟吹北枳的简介"],
+            ["Fvhitmitil", "Fvhitmitil的简介"],
+            ["TITANXPASCAL", "TITANXPASCAL的简介"],
+            ["枕书", "枕书的简介"],
+            ["幻想狂奏曲", "幻想狂奏曲的简介"],
+            ["迷之小肥羊", "迷之小肥羊的简介"],
+            ["special", "special的简介"],
+            ["裝逼造脸一顿踢", "裝逼造脸一顿踢的简介"],
+            ["岛田镖师", "岛田镖师的简介"],
+            ["淡风盈晓", "淡风盈晓的简介"],
+            ["SHE", "SHE的简介"],
+            ["想念还在等待救援", "想念还在等待救援的简介"],
+            ["只想做个洒脱的人", "只想做个洒脱的人的简介"],
+            ["腹黑猫", "腹黑猫的简介"],
+            ["从未手软", "从未手软的简介"],
+            ["梦里是艾什", "梦里是艾什的简介"],
+            ["逗斯咏", "逗斯咏的简介"],
+            ["寡言", "寡言的简介"],
+            ["易忘", "易忘的简介"],
+            ["济南屁屁王", "济南屁屁王的简介"],
+            ["吾", "吾的简介"],
+            ["这是我家的圆圆呀", "这是我家的圆圆呀的简介"],
+            ["宁就是地上这滩水", "宁就是地上这滩水的简介"],
+            ["没有梦想不想说话", "没有梦想不想说话的简介"],
+            ["家里有妖怪", "家里有妖怪的简介"],
+            ["神明也曾遗憾", "神明也曾遗憾的简介"],
+            ["AE86", "AE86的简介"]
         ];
-        this.description = ["来自发霉的披萨，永远的闷骚型男",
-            "Blast的简介",
-            "南烟吹北枳的简介",
-            "Fvhitmitil的简介",
-            "TITANXPASCAL的简介",
-            "枕书的简介",
-            "幻想狂奏曲的简介",
-            "迷之小肥羊的简介",
-            "special的简介",
-            "裝逼造脸一顿踢的简介",
-            "岛田镖师的简介",
-            "淡风盈晓的简介",
-            "SHE的简介",
-            "想念还在等待救援的简介",
-            "只想做个洒脱的人的简介",
-            "腹黑猫的简介",
-            "从未手软的简介",
-            "梦里是艾什的简介",
-            "逗斯咏的简介",
-            "寡言的简介",
-            "易忘的简介",
-            "济南屁屁王的简介",
-            "吾的简介",
-            "这是我家的圆圆呀的简介",
-            "宁就是地上这滩水的简介",
-            "没有梦想不想说话的简介",
-            "家里有妖怪的简介",
-            "神明也曾遗憾的简介",
-            "AE86的简介"];
-            
+
         // 当前展示到的索引位置
         this.currentIndex = 0;
         // 每组显示的名字数量
@@ -94,46 +68,13 @@ class NameDisplay {
             this.lastNameInColumn[i] = -200; // 初始偏移
         }
 
-        let nameElements = [];  // 存储所有名字元素的数组
-
-        // 页面可见性改变时的处理函数
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                // 页面隐藏时，清除所有现有的名字元素
-                nameElements.forEach(element => {
-                    if (element && element.parentNode) {
-                        element.parentNode.removeChild(element);
-                    }
-                });
-                nameElements = [];  // 重置数组
-            }
-        });
-
-        function createNameElement() {
-            // 创建新的名字元素
-            const nameElement = document.createElement('div');
-            nameElement.className = 'name-box';
-            nameElement.textContent = getRandomName();  // 假设这个函数已经存在
-            
-            // 设置初始位置
-            nameElement.style.bottom = '0';
-            nameElement.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            
-            document.body.appendChild(nameElement);
-            nameElements.push(nameElement);  // 将新元素添加到数组中
-            
-            // 动画完成后移除元素
-            nameElement.addEventListener('animationend', () => {
-                if (nameElement.parentNode) {
-                    nameElement.parentNode.removeChild(nameElement);
-                    nameElements = nameElements.filter(el => el !== nameElement);
-                }
-            });
-        }
-
-        // 添加页面可见性变化监听
+        // 添加一个标志来追踪是否正在显示
+        this.isDisplaying = false;
+        
+        // 修改页面可见性监听器
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
+                this.isDisplaying = false;
                 // 页面隐藏时清除所有名字元素
                 const nameBoxes = document.querySelectorAll('.name-box');
                 nameBoxes.forEach(box => {
@@ -142,13 +83,17 @@ class NameDisplay {
                     }
                 });
                 
-                // 重置计数器和偏移量
+                // 重置所有状态
                 this.currentIndex = 0;
                 this.columnOffsets.fill(0);
                 this.lastNameInColumn.fill(-200);
-                
-                // 重新打乱名字顺序
-                this.shuffleNames();
+            } else {
+                // 页面重新可见时，重新开始显示
+                if (!this.isDisplaying) {
+                    this.shuffleNames();
+                    this.showNextGroup();
+                    this.isDisplaying = true;
+                }
             }
         });
     }
@@ -194,12 +139,10 @@ class NameDisplay {
      * 随机打乱名字数组顺序
      */
     shuffleNames() {
-        // Fisher-Yates 洗牌算法
-        for (let i = this.names.length - 1; i > 0; i--) {
+        // Fisher-Yates 洗牌算法，直接打乱 persons 数组
+        for (let i = this.persons.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            // 同时交换 names 和 description 数组的元素
-            [this.names[i], this.names[j]] = [this.names[j], this.names[i]];
-            [this.description[i], this.description[j]] = [this.description[j], this.description[i]];
+            [this.persons[i], this.persons[j]] = [this.persons[j], this.persons[i]];
         }
     }
 
@@ -243,7 +186,12 @@ class NameDisplay {
     createNameElement(index, column) {
         const nameElement = document.createElement('div');
         nameElement.className = 'name-box';
-        nameElement.textContent = this.names[index];
+        
+        // 存储完整的人物信息，而不是仅存储索引
+        const person = this.persons[index];
+        nameElement.dataset.name = person[0];
+        nameElement.dataset.description = person[1];
+        nameElement.textContent = person[0];
 
         // 计算水平位置
         const containerWidth = this.container.clientWidth - 100;
@@ -254,7 +202,7 @@ class NameDisplay {
         tempSpan.style.visibility = 'hidden';
         tempSpan.style.position = 'absolute';
         tempSpan.style.fontSize = '24px'; // 与 name-box 相同的字体大小
-        tempSpan.textContent = this.names[index];
+        tempSpan.textContent = this.persons[index][0];
         document.body.appendChild(tempSpan);
         
         // 获取文字宽度并添加左右各20px的内边距
@@ -275,30 +223,15 @@ class NameDisplay {
             transform: translateY(${this.getVerticalOffset(column)}px);
         `;
 
-        // 鼠标悬停时暂停动画并提升层级
-        nameElement.addEventListener('mouseenter', () => {
+        // 修改鼠标事件处理
+        nameElement.addEventListener('mouseenter', (e) => {
             nameElement.classList.add('paused');
             nameElement.style.zIndex = '1000';
-        });
-
-        // 鼠标移出时恢复动画和原始层级
-        nameElement.addEventListener('mouseleave', () => {
-            nameElement.classList.remove('paused');
-            nameElement.style.zIndex = baseZIndex;
-        });
-
-        // 监听动画结束事件
-        nameElement.addEventListener('animationend', () => {
-            nameElement.remove();
-        });
-
-        // 修改鼠标悬停事件处理
-        nameElement.addEventListener('mouseenter', (e) => {
-            // 创建描述框
+            
             const descriptionBox = document.createElement('div');
             descriptionBox.className = 'description-box';
-            // 使用相同的索引获取对应的描述文本
-            descriptionBox.textContent = this.description[index];
+            // 直接使用存储在 dataset 中的描述
+            descriptionBox.textContent = nameElement.dataset.description;
             document.body.appendChild(descriptionBox);
 
             // 计算描述框位置
@@ -324,11 +257,20 @@ class NameDisplay {
         });
 
         nameElement.addEventListener('mouseleave', () => {
+            // 恢复动画
+            nameElement.classList.remove('paused');
+            nameElement.style.zIndex = baseZIndex;
+            
             // 移除描述框
             if (nameElement.descriptionBox) {
                 nameElement.descriptionBox.remove();
                 nameElement.descriptionBox = null;
             }
+        });
+
+        // 移除之前重复的事件监听
+        nameElement.addEventListener('animationend', () => {
+            nameElement.remove();
         });
 
         return nameElement;
@@ -357,10 +299,13 @@ class NameDisplay {
      * 显示下一组名字
      */
     showNextGroup() {
-        if (this.currentIndex + this.displayCount > this.names.length) {
+        if (!this.isDisplaying) {
+            this.isDisplaying = true;
+        }
+
+        if (this.currentIndex + this.displayCount > this.persons.length) {
             this.currentIndex = 0;
             this.shuffleNames();
-            // 重置列偏移
             this.columnOffsets.fill(0);
             this.lastNameInColumn.fill(-200);
         }
@@ -380,7 +325,7 @@ class NameDisplay {
         // 显示名字
         columns.forEach((column, index) => {
             setTimeout(() => {
-                const nameIndex = (this.currentIndex + index) % this.names.length;
+                const nameIndex = (this.currentIndex + index) % this.persons.length;
                 const nameElement = this.createNameElement(nameIndex, column);
                 this.container.appendChild(nameElement);
                 
