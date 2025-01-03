@@ -71,10 +71,18 @@ class NameDisplay {
         // 添加一个标志来追踪是否正在显示
         this.isDisplaying = false;
         
+        // 添加计时器引用
+        this.animationTimer = null;
+        
         // 修改页面可见性监听器
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.isDisplaying = false;
+                // 清除计时器
+                if (this.animationTimer) {
+                    clearTimeout(this.animationTimer);
+                    this.animationTimer = null;
+                }
                 // 页面隐藏时清除所有名字元素
                 const nameBoxes = document.querySelectorAll('.name-box');
                 nameBoxes.forEach(box => {
@@ -336,7 +344,8 @@ class NameDisplay {
         });
 
         this.currentIndex += this.displayCount;
-        setTimeout(() => this.showNextGroup(), this.displayCount * 500 + 500);
+        // 存储计时器引用
+        this.animationTimer = setTimeout(() => this.showNextGroup(), this.displayCount * 500 + 500);
     }
 }
 
