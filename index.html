@@ -7,18 +7,29 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <title>记忆里的那些人</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* 修改 iframe 的样式 */
-        iframe {
-            position: fixed;  /* 固定定位 */
-            bottom: 20px;    /* 距离底部 20px */
-            right: 20px;     /* 距离右侧 20px */
-            border: none;    /* 移除边框 */
-            z-index: 1000;   /* 确保 iframe 在其他元素上方 */
-        }
-    </style>
 </head>
 <body>
+    <button class="nav-button" onclick="showHeroModal()">
+        历年比赛榜
+    </button>
+
+    <div class="hero-modal" id="heroModal">
+        <div class="hero-content">
+            <button class="close-button" onclick="hideHeroModal()">×</button>
+            <div class="tabs">
+                <button class="tab" onclick="showRanking('ogp1')">OGP-Ⅰ<span class="date">2020.06.20</span></button>
+                <button class="tab" onclick="showRanking('ogp2')">OGP-Ⅱ<span class="date">2021.11.07</span></button>
+                <button class="tab" onclick="showRanking('ogp3')">OGP-Ⅲ<span class="date">2022.01.30</span></button>
+                <button class="tab active" onclick="showRanking('speed')">抗疫杯<span class="date">2022.05.04</span></button>
+            </div>
+
+            <div id="speedRanking" class="ranking-list active"></div>
+            <div id="ogp2Ranking" class="ranking-list"></div>
+            <div id="ogp1Ranking" class="ranking-list"></div>
+            <div id="ogp3Ranking" class="ranking-list"></div>
+        </div>
+    </div>
+
     <div class="container">
         <iframe 
             frameborder="no" 
@@ -34,8 +45,8 @@
     </div>
     <script src="js/sakura.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/rankings.js"></script>
     <script>
-        // 初始化樱花效果
         new Sakura();
     </script>
 </body>
