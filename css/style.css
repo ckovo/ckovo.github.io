@@ -219,7 +219,7 @@ body {
     animation-play-state: paused !important;
     transform: scale(1.1) translateZ(20px);  /* 放大效果 */
     box-shadow: 0 15px 45px rgba(31, 38, 135, 0.25);
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.918);
     border-color: rgba(255, 255, 255, 0.5);
 }
 
