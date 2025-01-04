@@ -275,4 +275,31 @@ body {
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: none;
+}
+
+/* 计数器样式 */
+.counter-container {
+    position: fixed;
+    top: 20px;          /* 改为距离顶部20px */
+    left: 20px;         /* 改为距离左侧20px */
+    transform: none;    /* 移除居中变换 */
+    background: rgba(175, 175, 175, 0.7);
+    padding: 15px 30px;
+    border-radius: 15px;
+    color: rgb(233 233 233);
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 0;
+    text-align: center;
+    opacity: 0;
+    font-weight: bold;
+    transition: opacity 0.5s ease;
+}
+
+.counter-container.show {
+    opacity: 1;
 } 
