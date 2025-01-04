@@ -7,6 +7,9 @@ function showHeroModal() {
         modal.setAttribute('data-initialized', 'true');
     }
     document.addEventListener('click', closeModalOnOutsideClick);
+    
+    // 默认选中 OGP-Ⅰ
+    showRanking('ogp1');
 }
 
 function hideHeroModal() {
@@ -70,11 +73,11 @@ const rankings = {
         { name: "寻龙", score: "记录：14关（8500秒）" }
     ],
     ogp1: [
-        { name: "南烟吹北枳", score: "记录：369.61秒" },
-        { name: "余不乐", score: "记录：418.24秒" },
-        { name: "blast", score: "记录：465.49秒" },
-        { name: "crazydouzi", score: "记录：514.69秒" },
-        { name: "其实我是自私鬼", score: "记录：517.78秒" }
+        { name: "南烟吹北枳", score: "记录：369.61秒（决赛）" },
+        { name: "余不乐", score: "记录：418.24秒（决赛）" },
+        { name: "blast", score: "记录：465.49秒（半决赛）" },
+        { name: "Crazydouzi", score: "记录：514.69秒（半决赛）" },
+        { name: "其实我是自私鬼", score: "记录：517.78秒（半决赛）" }
     ],
     ogp3: [
         { name: "逢魔时王", score: "记录：420.81秒" },

@@ -397,10 +397,10 @@ iframe {
 
 .tab {
     padding: 8px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -408,11 +408,37 @@ iframe {
     flex-direction: column;
     align-items: center;
     min-width: 100px;
+    position: relative;
+    overflow: hidden;
 }
 
+/* 活动标签样式 */
 .tab.active {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+/* 添加发光效果 */
+.tab.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* 标签悬停效果 */
+.tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* 标签页日期样式 */
@@ -422,6 +448,12 @@ iframe {
     margin-top: 4px;
     opacity: 0.8;
     font-weight: normal;
+}
+
+/* 活动标签日期样式 */
+.tab.active .date {
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* 排行榜列表样式 */
